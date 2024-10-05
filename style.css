@@ -1,0 +1,269 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+  --green: rgb(45, 165, 45);
+  --gap: 20px;
+  --primary: rgb(80, 180, 80);
+  --secondary: rgb(255, 110, 50);
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+header {
+  background-color: var(--green);
+  padding: 10px 0 20px;
+  color: white;
+}
+
+header > * {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo h1 {
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 1rem;
+}
+
+.header-buttons > * {
+  background-color: var(--green);
+  color: white;
+  padding: 10px 10px;
+  font-size: 1rem;
+  font-weight: 400;
+  border: 1px solid white;
+  border-radius: 5px;
+  margin-left: 20px;
+}
+
+.stats-1 {
+  margin: 60px 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+}
+
+.stats-2 {
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--gap);
+  margin-top: var(--gap);
+}
+
+.card {
+  background-color: rgb(240, 251, 255);
+  padding: 30px 0;
+  text-align: center;
+  border: 1px solid rgb(189, 189, 189);
+  border-radius: 5px;
+}
+
+.card h1 {
+  font-size: 2.4rem;
+}
+
+.card h2 {
+  margin-top: 10px;
+  font-weight: 400;
+}
+
+.daily-limit {
+  background-color: rgb(38, 38, 38);
+  color: white;
+}
+
+.gain-loss {
+  background-color: var(--green);
+  color: white;
+}
+
+hr {
+  padding: 8px;
+  background-color: #eee;
+  border: none;
+  border-radius: 10px;
+  margin: 50px 0;
+}
+
+.adder {
+  display: flex;
+  gap: var(--gap);
+}
+
+.adder > * {
+  width: 50%;
+  margin-bottom: 60px;
+}
+
+.input {
+  width: 100%;
+  line-height: 2rem;
+  font-size: 1rem;
+  text-indent: 10px;
+  margin: 30px 0;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.input:focus {
+  border-color: lightgreen;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgb(202, 218, 202);
+}
+
+.add {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.add > h1 {
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.meals-title {
+  border-left: 3px solid var(--primary);
+}
+
+.workouts-title {
+  border-left: 3px solid var(--secondary);
+}
+
+.add-meal-btn,
+.add-workout-btn {
+  padding: 9px 15px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.add-meal-btn {
+  background-color: var(--primary);
+}
+
+.add-workout-btn {
+  background-color: var(--secondary);
+}
+
+.add-meal,
+.add-workout {
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  padding: 0 20px;
+  align-items: flex-start;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.35s ease, padding 0.35s ease, border 0.35s ease;
+  background-color: rgb(246, 251, 253);
+}
+
+.add-meal.show,
+.add-workout.show {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border: 1px solid #ccc;
+}
+
+.add-meal > *,
+.add-workout > * {
+  width: 100%;
+  line-height: 2rem;
+  font-size: 1rem;
+  text-indent: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.add-meal > button,
+.add-workout > button {
+  width: unset;
+  text-indent: unset;
+  padding: 0 20px;
+  color: white;
+}
+
+.add-meal > button {
+  background-color: var(--primary);
+}
+
+.add-workout > button {
+  background-color: var(--secondary);
+}
+
+.list {
+  margin-top: 20px;
+  list-style: none;
+}
+
+.list li {
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.meal-name,
+.workout-name {
+  font-size: 1.4rem;
+}
+
+.calories-in,
+.calories-out {
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: white;
+  padding: 10px 30px;
+  border-radius: 5px;
+}
+
+.calories-in {
+  background-color: var(--primary);
+}
+
+.calories-out {
+  background-color: var(--secondary);
+}
+
+.delete {
+  background-color: rgb(209, 53, 53);
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+}

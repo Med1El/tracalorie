@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tracalorie App | Track Your Caloric Intake</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <h1><i class="fa-solid fa-utensils"></i> Tracalorie</h1>
+        </div>
+        <div class="header-buttons">
+          <button class="set-daily">Set Daily Limit</button>
+          <button class="reset-day">Reset Day</button>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+      <section class="stats">
+        <div class="stats-1">
+          <div class="card half daily-limit">
+            <h1 class="daily-limit-value">2000</h1>
+            <h2>Daily Calorie Limit</h2>
+          </div>
+          <div class="card half gain-loss">
+            <h1 class="gain-loss-value">400</h1>
+            <h2>Gain/Loss</h2>
+          </div>
+        </div>
+        <div class="stats-2">
+          <div class="card third consumed">
+            <h1 class="consumed-value">700</h1>
+            <h2>Calories Consumed</h2>
+          </div>
+          <div class="card third burned">
+            <h1 class="burned-value">300</h1>
+            <h2>Calories Burned</h2>
+          </div>
+          <div class="card third remaining">
+            <h1 class="remaining-value">1600</h1>
+            <h2>Calories Remaining</h2>
+          </div>
+        </div>
+      </section>
+      <hr />
+      <section class="adder">
+        <div class="meals">
+          <input type="text" class="input" placeholder="Filter Meals..." />
+          <div class="add">
+            <h1 class="meals-title">Meals / Food Items</h1>
+            <button class="add-meal-btn">+ Add Meal</button>
+          </div>
+          <div class="add-meal">
+            <input type="text" placeholder="Enter Meal or Food Item" />
+            <input type="text" placeholder="Enter Calories" />
+            <button type="submit">Add Meal Item</button>
+          </div>
+          <ul class="list">
+            <li>
+              <span class="meal-name">Breakfast</span>
+              <span class="calories-in">350</span>
+              <span
+                ><button class="delete">
+                  <i class="fa-solid fa-xmark"></i></button
+              ></span>
+            </li>
+            <li>
+              <span class="meal-name">Lunch</span>
+              <span class="calories-in">620</span>
+              <span
+                ><button class="delete">
+                  <i class="fa-solid fa-xmark"></i></button
+              ></span>
+            </li>
+          </ul>
+        </div>
+        <div class="workouts">
+          <input type="text" class="input" placeholder="Filter Workouts..." />
+          <div class="add">
+            <h1 class="workouts-title">Workouts</h1>
+            <button class="add-workout-btn">+ Add Workout</button>
+          </div>
+          <div class="add-workout">
+            <input type="text" placeholder="Enter Workout" />
+            <input type="text" placeholder="Enter Calories" />
+            <button type="submit">Add Workout Item</button>
+          </div>
+          <ul class="list">
+            <li>
+              <span class="workout-name">Treadmill 1 Hour</span>
+              <span class="calories-out">400</span>
+              <span
+                ><button class="delete">
+                  <i class="fa-solid fa-xmark"></i></button
+              ></span>
+            </li>
+            <li>
+              <span class="workout-name">Bike 90 Minutes</span>
+              <span class="calories-out">500</span>
+              <span
+                ><button class="delete">
+                  <i class="fa-solid fa-xmark"></i></button
+              ></span>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <script src="collapse.js"></script>
+    </div>
+  </body>
+</html>
