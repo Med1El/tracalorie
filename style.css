@@ -16,6 +16,11 @@ button {
   cursor: pointer;
 }
 
+a {
+  color: unset;
+  text-decoration: none;
+}
+
 button:hover {
   opacity: 0.85;
 }
@@ -52,6 +57,81 @@ header > * {
   border: 1px solid white;
   border-radius: 5px;
   margin-left: 20px;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+  z-index: 5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0; /* Hidden by default */
+  pointer-events: none; /* Prevent interaction when hidden */
+  transition: opacity 0.7s ease; /* Fade-in effect */
+}
+
+.overlay.show {
+  opacity: 1; /* When overlay is visible */
+  pointer-events: all;
+}
+
+.overlay.show .modal {
+  transform: translateY(100%);
+}
+
+.modal {
+  position: relative;
+  top: -50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%; /* Adjust this to your desired width */
+  margin: 0 auto; /* Centers the modal horizontally */
+  transition: transform 0.35s ease; /* Fade-in effect */
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Adjust width as needed */
+  z-index: 20; /* Ensure it's higher than the overlay */
+  position: relative;
+}
+
+.modal-header {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-content h2 {
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.modal-content h3 {
+  padding: 15px 20px 10px;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.modal-content .input {
+  margin: 10px 20px;
+  width: 90%;
+}
+
+.modal-content > button {
+  background-color: var(--green);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  margin: 10px 20px 20px;
 }
 
 .stats-1 {
@@ -96,7 +176,7 @@ header > * {
   color: white;
 }
 
-hr {
+.hr-bottom {
   padding: 8px;
   background-color: #eee;
   border: none;
@@ -221,12 +301,14 @@ hr {
   background-color: var(--secondary);
 }
 
-.list {
+.meal-list,
+.workout-list {
   margin-top: 20px;
   list-style: none;
 }
 
-.list li {
+.meal-list li,
+.workout-list li {
   padding: 15px 20px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
@@ -239,6 +321,7 @@ hr {
 .meal-name,
 .workout-name {
   font-size: 1.4rem;
+  min-width: 160px;
 }
 
 .calories-in,
@@ -248,6 +331,8 @@ hr {
   color: white;
   padding: 10px 30px;
   border-radius: 5px;
+  min-width: 130px;
+  text-align: center;
 }
 
 .calories-in {

@@ -20,6 +20,27 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="overlay">
+      <div class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Set Daily Limit</h2>
+            <a href="#" class="close">
+              <i class="fa-solid fa-xmark fa-xl"></i>
+            </a>
+          </div>
+          <hr />
+          <h3>Daily Calorie Limit</h3>
+          <input
+            type="number"
+            required
+            class="input daily-limit-input"
+            placeholder="2000"
+          />
+          <button type="submit" class="save-daily">Save</button>
+        </div>
+      </div>
+    </div>
     <header>
       <div class="container">
         <div class="logo">
@@ -34,44 +55,48 @@
     <div class="container">
       <section class="stats">
         <div class="stats-1">
-          <div class="card half daily-limit">
+          <div class="card daily-limit">
             <h1 class="daily-limit-value">2000</h1>
             <h2>Daily Calorie Limit</h2>
           </div>
-          <div class="card half gain-loss">
+          <div class="card gain-loss">
             <h1 class="gain-loss-value">400</h1>
             <h2>Gain/Loss</h2>
           </div>
         </div>
         <div class="stats-2">
-          <div class="card third consumed">
+          <div class="card consumed">
             <h1 class="consumed-value">700</h1>
             <h2>Calories Consumed</h2>
           </div>
-          <div class="card third burned">
+          <div class="card burned">
             <h1 class="burned-value">300</h1>
             <h2>Calories Burned</h2>
           </div>
-          <div class="card third remaining">
+          <div class="card remaining">
             <h1 class="remaining-value">1600</h1>
             <h2>Calories Remaining</h2>
           </div>
         </div>
       </section>
-      <hr />
+      <hr class="hr-bottom" />
       <section class="adder">
         <div class="meals">
-          <input type="text" class="input" placeholder="Filter Meals..." />
+          <input
+            type="text"
+            class="input filter-meal"
+            placeholder="Filter Meals..."
+          />
           <div class="add">
             <h1 class="meals-title">Meals / Food Items</h1>
             <button class="add-meal-btn">+ Add Meal</button>
           </div>
           <div class="add-meal">
-            <input type="text" placeholder="Enter Meal or Food Item" />
-            <input type="text" placeholder="Enter Calories" />
-            <button type="submit">Add Meal Item</button>
+            <input type="text" required placeholder="Enter Meal or Food Item" />
+            <input type="number" required placeholder="Enter Calories" />
+            <button type="submit" class="meal-btn">Add Meal Item</button>
           </div>
-          <ul class="list">
+          <ul class="meal-list">
             <li>
               <span class="meal-name">Breakfast</span>
               <span class="calories-in">350</span>
@@ -91,17 +116,21 @@
           </ul>
         </div>
         <div class="workouts">
-          <input type="text" class="input" placeholder="Filter Workouts..." />
+          <input
+            type="text"
+            class="input filter-workout"
+            placeholder="Filter Workouts..."
+          />
           <div class="add">
             <h1 class="workouts-title">Workouts</h1>
             <button class="add-workout-btn">+ Add Workout</button>
           </div>
           <div class="add-workout">
-            <input type="text" placeholder="Enter Workout" />
-            <input type="text" placeholder="Enter Calories" />
-            <button type="submit">Add Workout Item</button>
+            <input type="text" required placeholder="Enter Workout" />
+            <input type="number" required placeholder="Enter Calories" />
+            <button type="submit" class="workout-btn">Add Workout Item</button>
           </div>
-          <ul class="list">
+          <ul class="workout-list">
             <li>
               <span class="workout-name">Treadmill 1 Hour</span>
               <span class="calories-out">400</span>
@@ -122,6 +151,8 @@
         </div>
       </section>
       <script src="collapse.js"></script>
+      <script src="modal.js"></script>
+      <script src="app.js"></script>
     </div>
   </body>
 </html>
