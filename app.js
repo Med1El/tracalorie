@@ -50,21 +50,19 @@ class CaloriesTracker {
   }
 
   removeMeal(mealId) {
-    this.meals.forEach((meal) => {
-      if (meal.id === mealId) {
-        this.meals.pop(meal);
-        this.consumed -= meal.calories;
-      }
-    });
+    const removedMeal = this.meals.filter((meal) => meal.id === mealId)[0];
+    this.meals = this.meals.filter((meal) => meal.id !== mealId);
+    console.log(removedMeal, removedMeal.calories);
+    this.consumed -= parseFloat(removedMeal.calories);
   }
 
   removeWorkout(workoutId) {
-    this.workouts.forEach((workout) => {
-      if (workout.id === workoutId) {
-        this.workouts.pop(workout);
-        this.burned -= workout.calories;
-      }
-    });
+    const removedWorkout = this.workouts.filter(
+      (workout) => workout.id === workoutId
+    )[0];
+    this.workouts = this.workouts.filter((workout) => workout.id !== workoutId);
+    console.log(removedWorkout, removedWorkout.calories);
+    this.burned -= parseFloat(removedWorkout.calories);
   }
 
   compute() {
@@ -217,6 +215,8 @@ class AppDOM {
       this.render();
       e.target.parentElement.classList.remove('show');
       e.target.parentElement.style.height = '0';
+      document.querySelector(`.add-${itemType}`).children[0].value = '';
+      document.querySelector(`.add-${itemType}`).children[1].value = '';
     } else {
       alert('wrong data format, please enter correct format');
     }
@@ -239,29 +239,19 @@ class AppDOM {
   }
 
   deleteItem(e, itemType) {
-    if (e.target.classList.contains('delete')) {
-      e.target.parentElement.parentElement.remove();
-      if (itemType === 'meal')
-        this.caloriesTracker.removeMeal(
-          e.target.parentElement.parentElement.getAttribute('id')
-        );
-      else if (itemType === 'workout')
-        this.caloriesTracker.removeWorkout(
-          e.target.parentElement.parentElement.getAttribute('id')
-        );
-      this.render();
-    } else if (e.target.classList.contains('fa-solid')) {
-      e.target.parentElement.parentElement.parentElement.remove();
-      if (itemType === 'meal')
-        this.caloriesTracker.removeMeal(
-          e.target.parentElement.parentElement.parentElement.getAttribute('id')
-        );
-      else if (itemType === 'workout')
-        this.caloriesTracker.removeWorkout(
-          e.target.parentElement.parentElement.parentElement.getAttribute('id')
-        );
-      this.render();
-    }
+    if (e.target.classList.contains('delete'))
+      if (confirm('are you sure you want to delete the selected item ?')) {
+        e.target.parentElement.parentElement.remove();
+        if (itemType === 'meal')
+          this.caloriesTracker.removeMeal(
+            e.target.parentElement.parentElement.getAttribute('id')
+          );
+        else if (itemType === 'workout')
+          this.caloriesTracker.removeWorkout(
+            e.target.parentElement.parentElement.getAttribute('id')
+          );
+        this.render();
+      }
   }
 
   render() {
