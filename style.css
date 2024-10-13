@@ -192,6 +192,7 @@ header > * {
   left: 0;
   height: 100%;
   width: var(--progress, 0);
+  transition: width 0.5s ease-in-out;
   background-color: #4caf50;
   border-radius: 5px 0 0 5px;
 }
