@@ -177,11 +177,27 @@ header > * {
 }
 
 .hr-bottom {
+  position: relative;
   padding: 8px;
   background-color: #eee;
   border: none;
   border-radius: 10px;
   margin: 50px 0;
+}
+
+.hr-bottom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: var(--progress, 0);
+  background-color: #4caf50;
+  border-radius: 5px 0 0 5px;
+}
+
+.hr-bottom.danger::before {
+  background-color: rgb(235 13 13);
 }
 
 .adder {

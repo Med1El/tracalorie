@@ -1,36 +1,52 @@
+class Storage {
+  static initStorage() {
+    const dailyLimit = JSON.parse(localStorage.getItem('daily-limit'));
+    if (!dailyLimit) {
+      Storage.setDailyLimit(2000);
+      Storage.setMeals([]);
+      Storage.setWorkouts([]);
+      return false;
+    } else {
+      return true;
+    }
+  }
+  static getDailyLimit() {
+    return JSON.parse(localStorage.getItem('daily-limit'));
+  }
+  static getMeals() {
+    return JSON.parse(localStorage.getItem('meals'));
+  }
+  static getWorkouts() {
+    return JSON.parse(localStorage.getItem('workouts'));
+  }
+  static setDailyLimit(dailyLimit) {
+    localStorage.setItem('daily-limit', JSON.stringify(dailyLimit));
+  }
+  static setMeals(meals) {
+    localStorage.setItem('meals', JSON.stringify(meals));
+  }
+  static setWorkouts(workouts) {
+    localStorage.setItem('workouts', JSON.stringify(workouts));
+  }
+}
+
 class CaloriesTracker {
   constructor() {
     this.dailyLimit = 2000;
-    this.consumed = 0;
-    this.burned = 0;
-    this.gainLoss = 0;
-    this.remaining = this.dailyLimit;
     this.meals = [];
     this.workouts = [];
-    this.initStorage();
+    this.init();
   }
 
-  initStorage() {
-    let caloriesTracker = localStorage.getItem('calories-tracker');
-    if (!caloriesTracker) {
-      localStorage.setItem('calories-tracker', JSON.stringify(this));
-      return;
+  init() {
+    if (Storage.initStorage()) {
+      this.dailyLimit = Storage.getDailyLimit();
+      this.meals = Storage.getMeals();
+      this.workouts = Storage.getWorkouts();
     }
-    caloriesTracker = JSON.parse(caloriesTracker);
-    this.dailyLimit = caloriesTracker.dailyLimit;
-    this.consumed = caloriesTracker.consumed;
-    this.burned = caloriesTracker.burned;
-    this.gainLoss = caloriesTracker.gainLoss;
-    this.remaining = caloriesTracker.remaining;
-    this.meals = caloriesTracker.meals;
-    this.workouts = caloriesTracker.workouts;
   }
 
   reset() {
-    this.consumed = 0;
-    this.burned = 0;
-    this.gainLoss = 0;
-    this.remaining = this.dailyLimit;
     this.meals = [];
     this.workouts = [];
   }
@@ -38,35 +54,39 @@ class CaloriesTracker {
   addMeal(mealName, mealCalories) {
     const meal = new Meal(mealName, mealCalories);
     this.meals.push(meal);
-    this.consumed += parseFloat(meal.calories);
     return meal.id;
   }
 
   addWorkout(workoutName, workoutCalories) {
     const workout = new Workout(workoutName, workoutCalories);
     this.workouts.push(workout);
-    this.burned += parseFloat(workout.calories);
     return workout.id;
   }
 
   removeMeal(mealId) {
-    const removedMeal = this.meals.filter((meal) => meal.id === mealId)[0];
     this.meals = this.meals.filter((meal) => meal.id !== mealId);
-    console.log(removedMeal, removedMeal.calories);
-    this.consumed -= parseFloat(removedMeal.calories);
   }
 
   removeWorkout(workoutId) {
-    const removedWorkout = this.workouts.filter(
-      (workout) => workout.id === workoutId
-    )[0];
     this.workouts = this.workouts.filter((workout) => workout.id !== workoutId);
-    console.log(removedWorkout, removedWorkout.calories);
-    this.burned -= parseFloat(removedWorkout.calories);
   }
 
   compute() {
-    localStorage.setItem('calories-tracker', JSON.stringify(this));
+    Storage.setDailyLimit(this.dailyLimit);
+    Storage.setMeals(this.meals);
+    Storage.setWorkouts(this.workouts);
+    if (this.meals[0])
+      this.consumed = this.meals.reduce(
+        (total, meal) => total + parseFloat(meal.calories),
+        0
+      );
+    else this.consumed = 0;
+    if (this.workouts[0])
+      this.burned = this.workouts.reduce(
+        (total, workout) => total + parseFloat(workout.calories),
+        0
+      );
+    else this.burned = 0;
     this.gainLoss = this.consumed - this.burned;
     this.remaining = this.dailyLimit - this.gainLoss;
   }
@@ -161,19 +181,28 @@ class AppDOM {
   }
 
   setDaily() {
-    const val = document.querySelector('.daily-limit-input').value;
-    if (val) {
+    const daily = document.querySelector('.daily-limit-input');
+    if (daily.value) {
       overlay.classList.remove('show');
-      this.caloriesTracker.dailyLimit = val;
+      this.caloriesTracker.dailyLimit = daily.value;
+      daily.value = '';
       this.render();
     }
   }
 
   resetDay() {
-    this.caloriesTracker.reset();
-    document.querySelector('.meal-list').innerHTML = '';
-    document.querySelector('.workout-list').innerHTML = '';
-    this.render();
+    if (confirm('Are you sure you want to reset the app ?')) {
+      this.caloriesTracker.reset();
+      document.querySelector('.meal-list').innerHTML = '';
+      document.querySelector('.workout-list').innerHTML = '';
+      this.render();
+    }
+  }
+
+  updateProgress(percentage) {
+    document
+      .querySelector('.hr-bottom')
+      .style.setProperty('--progress', percentage + '%');
   }
 
   addItem(e, itemType) {
@@ -218,7 +247,7 @@ class AppDOM {
       document.querySelector(`.add-${itemType}`).children[0].value = '';
       document.querySelector(`.add-${itemType}`).children[1].value = '';
     } else {
-      alert('wrong data format, please enter correct format');
+      alert('Wrong data format, please enter correct format');
     }
   }
 
@@ -240,7 +269,7 @@ class AppDOM {
 
   deleteItem(e, itemType) {
     if (e.target.classList.contains('delete'))
-      if (confirm('are you sure you want to delete the selected item ?')) {
+      if (confirm('Are you sure you want to delete the selected item ?')) {
         e.target.parentElement.parentElement.remove();
         if (itemType === 'meal')
           this.caloriesTracker.removeMeal(
@@ -261,12 +290,14 @@ class AppDOM {
       this.caloriesTracker.dailyLimit;
     document.querySelector('.gain-loss-value').innerText =
       this.caloriesTracker.gainLoss;
-    if (this.caloriesTracker.gainLoss < 0) {
-      document.querySelector('.gain-loss').style.backgroundColor =
+    if (this.caloriesTracker.remaining < 0) {
+      document.querySelector('.remaining').style.backgroundColor =
         'rgb(235 13 13)';
+      document.querySelector('.hr-bottom').classList.add('danger');
     } else {
-      document.querySelector('.gain-loss').style.backgroundColor =
-        'var(--green)';
+      document.querySelector('.remaining').style.backgroundColor =
+        'rgb(240, 251, 255)';
+      document.querySelector('.hr-bottom').classList.remove('danger');
     }
     document.querySelector('.consumed-value').innerText =
       this.caloriesTracker.consumed;
@@ -274,6 +305,10 @@ class AppDOM {
       this.caloriesTracker.burned;
     document.querySelector('.remaining-value').innerText =
       this.caloriesTracker.remaining;
+
+    this.updateProgress(
+      (this.caloriesTracker.gainLoss * 100) / this.caloriesTracker.dailyLimit
+    );
   }
 }
 
